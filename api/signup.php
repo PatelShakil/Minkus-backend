@@ -26,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $response['data'] = [
             "name" =>$name,
             "email"=>$email,
-            "url"=>$_POST
+            "url"=>$_GET
         ];
     } else {
         // Hash the password
