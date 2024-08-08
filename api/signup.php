@@ -23,12 +23,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $response['message'] = 'Email already registered';
     } else {
         // Hash the password
-        $hashed_password = password_hash($password, PASSWORD_BCRYPT);
+        
 
         // Insert new user
         $sql = "INSERT INTO users (name, email, password) VALUES (?, ?, ?)";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("sss", $name, $email, $hashed_password);
+        $stmt->bind_param("sss", $name, $email, $password);
 
         if ($stmt->execute()) {
             // Retrieve the newly created user
