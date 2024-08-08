@@ -6,6 +6,8 @@ require 'connection.php';
 $response = array();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $response['data'] = null;
+    $response['message'] = "";
     // Retrieve and sanitize input
     $name = $conn->real_escape_string(trim($_POST['name']));
     $email = $conn->real_escape_string(trim($_POST['email']));
@@ -20,7 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($stmt->num_rows > 0) {
         $response['status'] = false;
-        $response['message'] = 'Email already registered';
+        $response['data'] = 'Email already registered';
     } else {
         // Hash the password
         
@@ -44,7 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt->fetch();
 
             $response['status'] =true;
-            $response['user'] = array(
+            $response['data'] = array(
                 'id' => $id,
                 'name' => $name,
                 'email' => $email

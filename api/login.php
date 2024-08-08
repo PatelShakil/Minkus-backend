@@ -6,6 +6,8 @@ require 'connection.php';
 $response = array();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $response['data'] = null;
+    $response['message'] = "";
     // Retrieve and sanitize input
     $email = $conn->real_escape_string(trim($_POST['email']));
     $password = $conn->real_escape_string(trim($_POST['password']));
@@ -24,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Verify password
         if ($password == $db_password) {
             $response['status'] = true;
-            $response['user'] = array(
+            $response['data'] = array(
                 'id' => $id,
                 'name' => $name,
                 'email' => $email
