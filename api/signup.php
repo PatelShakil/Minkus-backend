@@ -43,20 +43,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt->bind_result($id, $name, $email);
             $stmt->fetch();
 
-            $response['status'] = 'success';
+            $response['status'] =true;
             $response['user'] = array(
                 'id' => $id,
                 'name' => $name,
                 'email' => $email
             );
         } else {
-            $response['status'] = 'error';
+            $response['status'] = false;
             $response['message'] = 'Registration failed: ' . $stmt->error;
         }
         $stmt->close();
     }
 } else {
-    $response['status'] = 'error';
+    $response['status'] = false;
     $response['message'] = 'Invalid request method';
 }
 

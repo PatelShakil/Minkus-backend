@@ -23,24 +23,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Verify password
         if ($password == $db_password) {
-            $response['status'] = 'success';
+            $response['status'] = true;
             $response['user'] = array(
                 'id' => $id,
                 'name' => $name,
                 'email' => $email
             );
         } else {
-            $response['status'] = 'error';
+            $response['status'] = false;
             $response['message'] = 'Invalid email or password';
         }
     } else {
-        $response['status'] = 'error';
+        $response['status'] = false;
         $response['message'] = 'Invalid email or password';
     }
 
     $stmt->close();
 } else {
-    $response['status'] = 'error';
+    $response['status'] = false;
     $response['message'] = 'Invalid request method';
 }
 
