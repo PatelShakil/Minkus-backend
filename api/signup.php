@@ -25,7 +25,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $response['message'] = 'Email already registered';
         $response['data'] = [
             "name" =>$name,
-            "email"=>$email
+            "email"=>$email,
+            "url"=>$_POST
         ];
     } else {
         // Hash the password
