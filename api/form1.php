@@ -7,6 +7,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Define the folder to save the images
     $targetDir = "assets/";
 
+    try {
     // Generate a unique name for the image file
     $fileName = basename($_FILES['image']['name']);
     $targetFilePath = $targetDir . $fileName;
@@ -23,7 +24,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         mkdir($targetDir, 0755, true);
     }
 
-    try {
 
         // Check if the image file is valid and move it to the target directory
         if (move_uploaded_file($_FILES['image'], $targetFilePath)) {
