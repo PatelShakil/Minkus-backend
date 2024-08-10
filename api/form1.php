@@ -15,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $response = [
         'success' => false,
         'message' => '',
-        'data' => null
+        'data' => $_FILES
     ];
 
     // Check if the directory exists or create it
