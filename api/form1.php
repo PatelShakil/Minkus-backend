@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
         // Check if the image file is valid and move it to the target directory
-        if (move_uploaded_file($_FILES['image'], $targetFilePath)) {
+        if (move_uploaded_file($_FILES['image']['tmp_name'], $targetFilePath)) {
             // Collect other form data
             $name = $_POST['name'];
             $run = $_POST['run'];
