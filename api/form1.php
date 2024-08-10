@@ -8,7 +8,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $targetDir = "assets/";
 
     // Generate a unique name for the image file
-    $fileName = basename($_FILES['name']['image']);
+    $fileName = basename($_FILES['image']['name']);
     $targetFilePath = $targetDir . $fileName;
 
     // Initialize response array
@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // Check if the image file is valid and move it to the target directory
-    if (move_uploaded_file($_FILES['name']['image'], $targetFilePath)) {
+    if (move_uploaded_file($_FILES['image'], $targetFilePath)) {
         // Collect other form data
         $name = $_POST['name'];
         $run = $_POST['run'];
