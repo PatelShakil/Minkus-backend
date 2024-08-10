@@ -45,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 'isJa1' => $isJa1,
                 'isJa2' => $isJa2,
                 'sauCount' => $sauCount,
-                'imagePath' => $targetFilePath
+                'imagePath' => "https://app-minkus.com/api/$targetFilePath"
             ];
         } else {
             $response['message'] = 'Failed to move uploaded file.';
