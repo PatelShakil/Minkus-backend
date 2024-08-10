@@ -9,7 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     try {
     // Generate a unique name for the image file
-    $fileName = basename($_FILES['image']['name']);
+    $fileName = date('Y_m_d_H_i_s') + ".png";
     $targetFilePath = $targetDir . $fileName;
 
     // Initialize response array
