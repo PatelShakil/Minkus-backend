@@ -37,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $user_email = $_POST['user_email'];
 
             // Construct the response data
-            $response['success'] = true;
+            $response['status'] = true;
             $response['message'] = 'Form submitted successfully';
             $response['data'] = [
                 'name' => $name,
@@ -70,17 +70,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 // Execute the statement
                 if ($stmt->execute()) {
-                    $response['success'] = true;
+                    $response['status'] = true;
                     $response['message'] = 'Form submitted successfully and data stored in database';
                     $response['data'] = "Form Submitted Successfully";
                 } else {
-                    $response['success'] = false;
+                    $response['status'] = false;
                     $response['message'] = 'Database error: ' . $stmt->error;
                 }
 
                 $stmt->close();
             } else {
-                $response['success'] = false;
+                $response['status'] = false;
                 $response['message'] = 'Failed to prepare SQL statement: ' . $conn->error;
             }
         } else {
