@@ -9,21 +9,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $targetDir = "assets/";
 
     try {
-    // Generate a unique name for the image file
-    $fileName = date('Y_m_d_H_i_s') . ".png";
-    $targetFilePath = $targetDir . $fileName;
+        // Generate a unique name for the image file
+        $fileName = date('Y_m_d_H_i_s') . ".png";
+        $targetFilePath = $targetDir . $fileName;
 
-    // Initialize response array
-    $response = [
-        'success' => false,
-        'message' => '',
-        'data' => null
-    ];
+        // Initialize response array
+        $response = [
+            'success' => false,
+            'message' => '',
+            'data' => null
+        ];
 
-    // Check if the directory exists or create it
-    if (!is_dir($targetDir)) {
-        mkdir($targetDir, 0755, true);
-    }
+        // Check if the directory exists or create it
+        if (!is_dir($targetDir)) {
+            mkdir($targetDir, 0755, true);
+        }
 
 
         // Check if the image file is valid and move it to the target directory
@@ -47,13 +47,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 'isJa1' => $isJa1,
                 'isJa2' => $isJa2,
                 'sauCount' => $sauCount,
-                'user_email'=>$user_email,
+                'user_email' => $user_email,
                 'imagePath' => "https://app-minkus.com/api/$targetFilePath"
             ];
 
-            $sql = "INSERT INTO form_a (name, signature,state,rundgang,sauberkit,checkbox1,checkbox2,user_email) VALUES (?, ?, ?,?,?,?,?,?)";
+            $sql = "INSERT INTO form_a (name, signature,state,rundgang,sauberkit,checkbox1,checkbox2,user_email) VALUES (?,?,?,?,?,?,?,?)";
             $stmt = $conn->prepare($sql);
-            $stmt->bind_param("sss", $name, $response['data']['imagePath'], $obj,$run,$isJa1,$isJa2,$user_email);
+            $stmt->bind_param($name, $response['data']['imagePath'], $obj, $run, $sauCount, $isJa1, $isJa2, $user_email);
             if ($stmt->execute()) {
                 $response['status'] = true;
                 $response['data'] = "Form Submitted Successfully";
@@ -61,7 +61,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $response['status'] = false;
                 $response['message'] = 'Registration failed: ' . $stmt->error;
             }
-
         } else {
             $response['message'] = 'Failed to move uploaded file.';
         }
