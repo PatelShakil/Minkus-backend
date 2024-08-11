@@ -72,6 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 if ($stmt->execute()) {
                     $response['success'] = true;
                     $response['message'] = 'Form submitted successfully and data stored in database';
+                    $response['data'] = "Form Submitted Successfully"
                 } else {
                     $response['success'] = false;
                     $response['message'] = 'Database error: ' . $stmt->error;
