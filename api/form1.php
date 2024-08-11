@@ -1,6 +1,7 @@
 <?php
 
 header('Content-Type: application/json');
+require('connection.php');
 
 // Check if the request method is POST
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -16,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $response = [
         'success' => false,
         'message' => '',
-        'data' => $_FILES
+        'data' => null
     ];
 
     // Check if the directory exists or create it
@@ -34,6 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $isJa1 = filter_var($_POST['isJa1'], FILTER_VALIDATE_BOOLEAN);
             $isJa2 = filter_var($_POST['isJa2'], FILTER_VALIDATE_BOOLEAN);
             $sauCount = intval($_POST['sauCount']);
+            $user_email = $_POST['user_email'];
 
             // Construct the response data
             $response['success'] = true;
@@ -45,8 +47,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 'isJa1' => $isJa1,
                 'isJa2' => $isJa2,
                 'sauCount' => $sauCount,
+                'user_email'=>$user_email,
                 'imagePath' => "https://app-minkus.com/api/$targetFilePath"
             ];
+
+            $sql = "INSERT INTO form_a (name, signature,state,rundgang,sauberkit,checkbox1,checkbox2,user_email) VALUES (?, ?, ?,?,?,?,?,?)";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("sss", $name, $response['data']['imagePath'], $obj,$run,$isJa1,$isJa2,$user_email);
+            if ($stmt->execute()) {
+                $response['status'] = true;
+                $response['data'] = "Form Submitted Successfully";
+            } else {
+                $response['status'] = false;
+                $response['message'] = 'Registration failed: ' . $stmt->error;
+            }
+
         } else {
             $response['message'] = 'Failed to move uploaded file.';
         }
