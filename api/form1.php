@@ -1,7 +1,7 @@
 <?php
 
 header('Content-Type: application/json');
-require('connection.php');
+require('connection.php'); // Assuming this file contains the $conn variable for database connection
 
 // Check if the request method is POST
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -24,7 +24,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (!is_dir($targetDir)) {
             mkdir($targetDir, 0755, true);
         }
-
 
         // Check if the image file is valid and move it to the target directory
         if (move_uploaded_file($_FILES['image']['tmp_name'], $targetFilePath)) {
@@ -51,15 +50,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 'imagePath' => "https://app-minkus.com/api/$targetFilePath"
             ];
 
-            $sql = "INSERT INTO form_a (name, signature,state,rundgang,sauberkit,checkbox1,checkbox2,user_email) VALUES (?,?,?,?,?,?,?,?)";
+            // SQL statement with placeholders
+            $sql = "INSERT INTO form_a (name, signature, state, rundgang, sauberkit, checkbox1, checkbox2, user_email) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
             $stmt = $conn->prepare($sql);
-            $stmt->bind_param($name, $response['data']['imagePath'], $obj, $run, $sauCount, $isJa1, $isJa2, $user_email);
-            if ($stmt->execute()) {
-                $response['status'] = true;
-                $response['data'] = "Form Submitted Successfully";
+
+            if ($stmt) {
+                // Bind the parameters to the SQL query
+                $stmt->bind_param(
+                    "ssssiiis", // Type of each parameter (string, string, string, string, int, int, string)
+                    $name,
+                    $response['data']['imagePath'],
+                    $obj,
+                    $run,
+                    $sauCount,
+                    $isJa1,
+                    $isJa2,
+                    $user_email
+                );
+
+                // Execute the statement
+                if ($stmt->execute()) {
+                    $response['success'] = true;
+                    $response['message'] = 'Form submitted successfully and data stored in database';
+                } else {
+                    $response['success'] = false;
+                    $response['message'] = 'Database error: ' . $stmt->error;
+                }
+
+                $stmt->close();
             } else {
-                $response['status'] = false;
-                $response['message'] = 'Registration failed: ' . $stmt->error;
+                $response['success'] = false;
+                $response['message'] = 'Failed to prepare SQL statement: ' . $conn->error;
             }
         } else {
             $response['message'] = 'Failed to move uploaded file.';
