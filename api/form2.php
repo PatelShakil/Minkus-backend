@@ -55,7 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             ];
 
             // SQL statement with placeholders
-            $sql = "INSERT INTO form_b (name, signature, state, rundgang, sauberkit, checkbox1, checkbox2,checkbox3,checkbox4, user_email) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+            $sql = "INSERT INTO form_b (name, signature, state, rundgang, sauberkit, checkbox1, checkbox2,checkbox3,checkbox4, user_email) VALUES (?, ?, ?, ?, ?,?,?, ?, ?, ?)";
             $stmt = $conn->prepare($sql);
 
             if ($stmt) {
