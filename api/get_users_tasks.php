@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         ];
 
         // Retrieve user_email from GET parameters
-        if (isset($_GET['user_email'])) {
+        if (isset($_POST['user_email'])) {
             $user_email = mysqli_real_escape_string($con, $_POST['user_email']);
 
             $sql = "SELECT * FROM users_tasks WHERE user_email = '$user_email'";
@@ -51,6 +51,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // If the request method is not GET, return an error
     echo json_encode([
         'status' => false,
-        'message' => 'Invalid request method. Please use GET.'
+        'message' => 'Invalid request method. Please use POST.'
     ]);
 }
