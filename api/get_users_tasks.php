@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $user_email = mysqli_real_escape_string($conn, $_POST['user_email']);
 
             $sql = "SELECT * FROM users_tasks WHERE user_email = '$user_email'";
-            $result = mysqli_query($con, $sql);
+            $result = mysqli_query($conn, $sql);
 
             if ($result && mysqli_num_rows($result) > 0) {
                 $tasks = [];
