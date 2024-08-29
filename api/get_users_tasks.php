@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // Retrieve user_email from GET parameters
         if (isset($_POST['user_email'])) {
-            $user_email = mysqli_real_escape_string($con, $_POST['user_email']);
+            $user_email = mysqli_real_escape_string($conn, $_POST['user_email']);
 
             $sql = "SELECT * FROM users_tasks WHERE user_email = '$user_email'";
             $result = mysqli_query($con, $sql);
