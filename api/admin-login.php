@@ -13,16 +13,19 @@ $response = array();
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $response['data'] = null;
     $response['message'] = "";
-    // Retrieve and sanitize input
-    $email = $conn->real_escape_string(trim($_POST['email']));
-    $password = $conn->real_escape_string(trim($_POST['password']));
-
-    if($email !== null && $password !== null){
+    
+    
+    if(isset($_POST['email'])&& isset($_POST['password'])){
         $response['status'] = false;
         $response['message'] = "Email and Password are both required";
         echo json_encode($response);
         die;
     }
+    // Retrieve and sanitize input
+    $email = $conn->real_escape_string(trim($_POST['email']));
+    $password = $conn->real_escape_string(trim($_POST['password']));
+
+    
 
 
     // Query to check if user exists
