@@ -18,16 +18,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $conn->real_escape_string(trim($_POST['email']));
     $date = $_POST['date'];
 
-    // Convert date string to DateTime object
-    $dateObject = DateTime::createFromFormat("Y-m-d", $date);
+    // Check if the date format is valid
+    if (!DateTime::createFromFormat('Y-m-d', $date)) {
+        $response['status'] = false;
+        $response['message'] = 'Invalid date format. Use Y-m-d format.';
+        echo json_encode($response);
+        exit;
+    }
 
-    // Convert DateTime object to string in 'Y-m-d' format for database insertion
-    $formattedDate = $dateObject->format('Y-m-d');
+    // Convert date string to DateTime object and format it
+    $dateObject = DateTime::createFromFormat("Y-m-d", $date);
+    $formattedDate = $dateObject->format('Y-m-d');  // Format it back to Y-m-d
 
     $title = $conn->real_escape_string(trim($_POST['title']));
     $desc = $conn->real_escape_string(trim($_POST['desc']));
 
-    // Check if the email already exists
+    // Check if the user email exists in the database
     $checkEmailQuery = "SELECT id FROM users WHERE email = ?";
     $stmt = $conn->prepare($checkEmailQuery);
     $stmt->bind_param("s", $email);
@@ -38,11 +44,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $response['status'] = false;
         $response['message'] = 'User does not exist';
     } else {
-        // Insert the task
+        // Insert new task into users_tasks table
         $sql = "INSERT INTO users_tasks (title, description, user_email, date) VALUES (?, ?, ?, ?)";
         $stmt = $conn->prepare($sql);
 
-        // Bind the date as a string
+        // Bind date as a string
         $stmt->bind_param("ssss", $title, $desc, $email, $formattedDate);
 
         if ($stmt->execute()) {
