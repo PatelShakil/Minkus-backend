@@ -14,8 +14,16 @@ $response['message'] = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
 
-    // Query to fetch all users_tasks with corresponding user details using a JOIN
-    $sql = "SELECT ut.*, u.* 
+    // Query to fetch all users_tasks with corresponding user details using a JOIN, with column aliases
+    $sql = "SELECT 
+                ut.id AS task_id, 
+                ut.title AS task_title, 
+                ut.description AS task_description, 
+                ut.date AS task_date, 
+                u.id AS user_id, 
+                u.name AS user_name, 
+                u.email AS user_email, 
+                u.phone AS user_phone 
             FROM users_tasks ut
             JOIN users u ON ut.user_email = u.email";  // JOIN users based on the matching email
 
@@ -30,20 +38,18 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
 
             // Fetch each row from the result set
             while ($row = $result->fetch_assoc()) {
-                print_r($row);
                 $task = array(
                     "task" => array(
-                        "id" => $row['id'],  // assuming task ID
-                        "title" => $row['title'],
-                        "description" => $row['description'],
-                        "date" => $row['date'],
-                        // other task fields from users_tasks
+                        "id" => $row['task_id'],
+                        "title" => $row['task_title'],
+                        "description" => $row['task_description'],
+                        "date" => $row['task_date']
                     ),
                     "user" => array(
-                        "id" => $row['id'],  // assuming user ID
-                        "name" => $row['name'],
-                        "email" => $row['email'],
-                        // other user fields from users
+                        "id" => $row['user_id'],
+                        "name" => $row['user_name'],
+                        "email" => $row['user_email'],
+                        "phone" => $row['user_phone']
                     )
                 );
 
