@@ -17,7 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $conn->real_escape_string(trim($_POST['email']));
     $password = $conn->real_escape_string(trim($_POST['password']));
 
-    if($email !== '' && $password !== ''){
+    if($email !== null && $password !== null){
         $response['status'] = false;
         $response['message'] = "Email and Password are both required";
         echo json_encode($response);
