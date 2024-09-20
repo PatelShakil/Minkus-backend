@@ -1,7 +1,7 @@
 <?php
 // Allow from any origin
 header('Content-Type: application/json');
-header("Access-Control-Allow-Origin: http://localhost:5173");  // Specify your React dev server's URL
+// header("Access-Control-Allow-Origin: http://localhost:5173");  // Specify your React dev server's URL
 require 'connection.php';
 
 // Initialize response array
