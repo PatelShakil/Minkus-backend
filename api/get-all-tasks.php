@@ -30,7 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
 
             // Fetch each row from the result set
             while ($row = $result->fetch_assoc()) {
-                echo $row;
+                print($row);
                 $task = array(
                     "task" => array(
                         "id" => $row['id'],  // assuming task ID
