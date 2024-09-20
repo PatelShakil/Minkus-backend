@@ -23,7 +23,6 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
                 u.id AS user_id, 
                 u.name AS user_name, 
                 u.email AS user_email, 
-                u.phone AS user_phone 
             FROM users_tasks ut
             JOIN users u ON ut.user_email = u.email";  // JOIN users based on the matching email
 
@@ -49,7 +48,6 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
                         "id" => $row['user_id'],
                         "name" => $row['user_name'],
                         "email" => $row['user_email'],
-                        "phone" => $row['user_phone']
                     )
                 );
 
