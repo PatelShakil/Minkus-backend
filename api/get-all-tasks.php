@@ -42,7 +42,6 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
                         "id" => $row['id'],  // assuming user ID
                         "name" => $row['name'],
                         "email" => $row['email'],
-                        "phone" => $row['phone'],
                         // other user fields from users
                     )
                 );
