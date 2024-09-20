@@ -21,8 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
     $stmt->store_result();
 
     if ($stmt->num_rows > 0) {
-        $stmt->bind_result($data);
-        $stmt->fetch();
+        $data = $stmt->fetch();        
         if ($data != null) {
             $response['data'] = $data;
             $response['message'] = 'Users Found';
