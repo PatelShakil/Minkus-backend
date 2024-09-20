@@ -13,10 +13,17 @@ $response = array();
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $response['data'] = null;
     $response['message'] = "";
+
     // Retrieve and sanitize input
     $email = $conn->real_escape_string(trim($_POST['email']));
     $date = $_POST['date'];
-    $date = DateTime::createFromFormat("Y-m-d",$date);
+
+    // Convert date string to DateTime object
+    $dateObject = DateTime::createFromFormat("Y-m-d", $date);
+
+    // Convert DateTime object to string in 'Y-m-d' format for database insertion
+    $formattedDate = $dateObject->format('Y-m-d');
+
     $title = $conn->real_escape_string(trim($_POST['title']));
     $desc = $conn->real_escape_string(trim($_POST['desc']));
 
@@ -27,26 +34,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->execute();
     $stmt->store_result();
 
-    if ($stmt->num_rows < 0) {
+    if ($stmt->num_rows == 0) {
         $response['status'] = false;
-        $response['message'] = 'User not exists';
+        $response['message'] = 'User does not exist';
     } else {
-        // Hash the password
-
-
-        // Insert new user
-        $sql = "INSERT INTO users_tasks ( title,description,user_email,date) VALUES (?,?, ?, ?)";
+        // Insert the task
+        $sql = "INSERT INTO users_tasks (title, description, user_email, date) VALUES (?, ?, ?, ?)";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("sssd", $title, $desc, $email, $date);
+
+        // Bind the date as a string
+        $stmt->bind_param("ssss", $title, $desc, $email, $formattedDate);
 
         if ($stmt->execute()) {
-            // Retrieve the newly created user
-
             $response['status'] = true;
             $response['message'] = "Task created successfully";
         } else {
             $response['status'] = false;
-            $response['message'] = 'Task Creation failed: ' . $stmt->error;
+            $response['message'] = 'Task creation failed: ' . $stmt->error;
         }
         $stmt->close();
     }
