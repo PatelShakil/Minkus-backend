@@ -53,4 +53,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 $conn->close();
 
 // Output the response in JSON format
-return json_encode($response);
+echo json_encode($response);
