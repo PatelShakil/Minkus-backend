@@ -22,7 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
                 ut.date AS task_date, 
                 u.id AS user_id, 
                 u.name AS user_name, 
-                u.email AS user_email, 
+                u.email AS user_email
             FROM users_tasks ut
             JOIN users u ON ut.user_email = u.email";  // JOIN users based on the matching email
 
