@@ -8,7 +8,8 @@ header("Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-W
 require 'connection.php';
 
 
-function getForm($tbl,$conn){
+function getForm($tbl, $conn)
+{
     $sql = "SELECT * FROM $tbl";
     $stmt = $conn->prepare($sql);
 
@@ -44,22 +45,41 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['id'])) {
 
     $id = $_GET["id"];
 
-    switch($id){
-        case 1 :{
-            $response = getForm("form_a",$conn);
-        
-            break;
-        }
-        case 2 :{
-            
-            break;
-        }
-
+    switch ($id) {
+        case 1: {
+                $response = getForm("form_a", $conn);
+                break;
+            }
+        case 2: {
+                $response = getForm("form_b", $conn);
+                break;
+            }
+        case 3: {
+                $response = getForm("form_c", $conn);
+                break;
+            }
+        case 4: {
+                $response = getForm("form_d", $conn);
+                break;
+            }
+        case 5: {
+                $response = getForm("form_e", $conn);
+                break;
+            }
+        case 6: {
+                $response = getForm("form_f", $conn);
+                break;
+            }
+        case 7: {
+                $response = getForm("form_f", $conn);
+                break;
+            }
+            default:{
+                $response['status'] = false;
+                $response['message'] = 'Invalid ID requested';
+            }
     }
-
-
-    
-}else{
+} else {
     $response['status'] = false;
     $response['message'] = 'Invalid request method';
 }
@@ -69,4 +89,3 @@ $conn->close();
 
 // Output the response in JSON format
 echo json_encode($response);
-
