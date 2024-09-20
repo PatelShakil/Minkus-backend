@@ -15,7 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $response['message'] = "";
     // Retrieve and sanitize input
     $email = $conn->real_escape_string(trim($_POST['email']));
-    $date = $conn->real_escape_string(trim($_POST['date']));
+    $date = $_POST['date'];
     $title = $conn->real_escape_string(trim($_POST['title']));
     $desc = $conn->real_escape_string(trim($_POST['desc']));
 
