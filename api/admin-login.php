@@ -17,6 +17,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $conn->real_escape_string(trim($_POST['email']));
     $password = $conn->real_escape_string(trim($_POST['password']));
 
+    if($email !== '' && $password !== ''){
+        $response['status'] = false;
+        $response['message'] = "Email and Password are both required";
+        echo json_encode($response);
+    }
+
+
     // Query to check if user exists
     $sql = "SELECT id, name, password FROM admins WHERE email = ?";
     $stmt = $conn->prepare($sql);
