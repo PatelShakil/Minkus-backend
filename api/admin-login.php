@@ -21,6 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $response['status'] = false;
         $response['message'] = "Email and Password are both required";
         echo json_encode($response);
+        die;
     }
 
 
