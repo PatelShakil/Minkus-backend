@@ -1,4 +1,8 @@
 <?php
+// Allow from any origin
+header("Access-Control-Allow-Origin: http://localhost:5173");  // Specify your React dev server's URL
+header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
+header("Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With");
 header('Content-Type: application/json');
 require 'connection.php';
 
@@ -30,7 +34,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 'id' => $id,
                 'name' => $name,
                 'email' => $email,
-                'password'=>$password
+                'password' => $password
             );
         } else {
             $response['status'] = false;
