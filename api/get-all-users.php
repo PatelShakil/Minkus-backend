@@ -9,29 +9,35 @@ require 'connection.php';
 
 // Initialize response array
 $response = array();
+$response['data'] = null;
+$response['message'] = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
-    $response['data'] = null;
-    $response['message'] = "";
 
-    // Query to check if user exists
+    // Query to fetch all users
     $sql = "SELECT * FROM users";
     $stmt = $conn->prepare($sql);
-    $stmt->execute();
-    $stmt->store_result();
 
-    if ($stmt->num_rows > 0) {
-        $data = $stmt->fetch();        
-        if ($data != null) {
+    if ($stmt) {
+        $stmt->execute();
+        $result = $stmt->get_result();  // Get the result set from the prepared statement
+
+        if ($result->num_rows > 0) {
+            $data = $result->fetch_all(MYSQLI_ASSOC);  // Fetch all users as an associative array
+
+            $response['status'] = true;
             $response['data'] = $data;
-            $response['message'] = 'Users Found';
+            $response['message'] = 'Users found';
+        } else {
+            $response['status'] = false;
+            $response['message'] = 'No users found';
         }
+
+        $stmt->close();
     } else {
         $response['status'] = false;
-        $response['message'] = 'no users found';
+        $response['message'] = 'Failed to prepare the statement';
     }
-
-    $stmt->close();
 } else {
     $response['status'] = false;
     $response['message'] = 'Invalid request method';
