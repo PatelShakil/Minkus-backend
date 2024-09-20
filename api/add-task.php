@@ -16,6 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Retrieve and sanitize input
     $email = $conn->real_escape_string(trim($_POST['email']));
     $date = $_POST['date'];
+    $date = DateTime::createFromFormat("Y-m-d",$date);
     $title = $conn->real_escape_string(trim($_POST['title']));
     $desc = $conn->real_escape_string(trim($_POST['desc']));
 
