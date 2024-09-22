@@ -32,6 +32,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $run = $_POST['run'];
             $obj = $_POST['obj'];
             $user_email = $_POST['user_email'];
+            $lat = doubleval($_POST['lat']);
+            $long = doubleval($_POST['long']);
 
             // Construct the response data
             $response['status'] = true;
@@ -45,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             ];
 
             // SQL statement with placeholders
-            $sql = "INSERT INTO form_g (name, signature, state,rundgang,  user_email) VALUES (?, ?,?,  ?, ?)";
+            $sql = "INSERT INTO form_g (name, signature, state,rundgang,  user_email,lat,lon) VALUES (?,?,?, ?,?,  ?, ?)";
             $stmt = $conn->prepare($sql);
 
             if ($stmt) {
@@ -56,7 +58,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $response['data']['imagePath'],
                     $obj,
                     $run,
-                    $user_email
+                    $user_email,
+                    $lat,
+                    $long
                 );
 
                 // Execute the statement

@@ -34,6 +34,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $isJa1 = filter_var($_POST['isJa1'], FILTER_VALIDATE_BOOLEAN);
             $sauCount = intval($_POST['sauCount']);
             $user_email = $_POST['user_email'];
+            $lat = doubleval($_POST['lat']);
+            $long = doubleval($_POST['long']);
 
             // Construct the response data
             $response['status'] = true;
@@ -49,20 +51,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             ];
 
             // SQL statement with placeholders
-            $sql = "INSERT INTO form_d (name, signature, state, rundgang, sauberkit, checkbox1, user_email) VALUES (?, ?,?,?, ?, ?, ?)";
+            $sql = "INSERT INTO form_d (name, signature, state, rundgang, sauberkit, checkbox1, user_email,lat,lon) VALUES (?, ?,?,?,?,?, ?, ?, ?)";
             $stmt = $conn->prepare($sql);
 
             if ($stmt) {
                 // Bind the parameters to the SQL query
                 $stmt->bind_param(
-                    "ssssiis", // Type of each parameter (string, string, string, string, int, int, string)
+                    "ssssiisdd", // Type of each parameter (string, string, string, string, int, int, string)
                     $name,
                     $response['data']['imagePath'],
                     $obj,
                     $run,
                     $sauCount,
                     $isJa1,
-                    $user_email
+                    $user_email,
+                    $lat,
+                    $long
                 );
 
                 // Execute the statement
