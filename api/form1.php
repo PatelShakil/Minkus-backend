@@ -34,8 +34,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $isJa1 = filter_var($_POST['isJa1'], FILTER_VALIDATE_BOOLEAN);
             $isJa2 = filter_var($_POST['isJa2'], FILTER_VALIDATE_BOOLEAN);
             $sauCount = intval($_POST['sauCount']);
-            $lat = doubleval($POST['lat']);
-            $long = doubleval($POST['long']);
+            $lat = doubleval($_POST['lat']);
+            $long = doubleval($_POST['long']);
             $user_email = $_POST['user_email'];
 
             // Construct the response data
