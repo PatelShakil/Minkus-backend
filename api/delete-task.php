@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $sql = "DELETE FROM users_tasks WHERE id = '$id'";
             $result = mysqli_query($conn, $sql);
 
-            if ($result && mysqli_num_rows($result) > 0) {
+            if ($result) {
                 // Construct the response data
                 $response['status'] = true;
                 $response['message'] = 'Tasks Deleted successfully';
