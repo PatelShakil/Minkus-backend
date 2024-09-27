@@ -32,9 +32,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 // Construct the response data
                 $response['status'] = true;
                 $response['message'] = 'Tasks Deleted successfully';
-                $response['data'] = $tasks;
+                $response['data'] = null;
             } else {
-                $response['message'] = 'No tasks found.';
+                $response['message'] = 'No task found.';
             }
         } else {
             $response['message'] = 'Task ID is required.';
