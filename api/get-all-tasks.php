@@ -44,7 +44,9 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
                         "id" => $row['task_id'],
                         "title" => $row['task_title'],
                         "description" => $row['task_description'],
-                        "date" => $row['task_date']
+                        "date" => $row['task_date'],
+                        "is_mull"=>$row['is_mull'],
+                        "color"=>$row['color']
                     ),
                     "user" => array(
                         "id" => $row['user_id'],
