@@ -1,8 +1,11 @@
 <?php
 // Allow from any origin
 header('Content-Type: application/json');
-header("Access-Control-Allow-Origin: http://localhost:5173");  // Specify your React dev server's URL
-header("Access-Control-Allow-Origin: https://admin.app-minkus.com");  // Specify your React dev server's URL
+$allowed_origins = ['http://localhost:5173', 'https://admin.app-minkus.com'];
+if (in_array($_SERVER['HTTP_ORIGIN'], $allowed_origins)) {
+    header("Access-Control-Allow-Origin: " . $_SERVER['HTTP_ORIGIN']);
+}
+
 header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
 header("Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With");
 
