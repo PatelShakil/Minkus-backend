@@ -2,7 +2,7 @@
 // Allow from any origin
 header('Content-Type: application/json');
 $allowed_origins = ['http://localhost:5173', 'https://admin.app-minkus.com'];
-if (in_array($_SERVER['HTTP_ORIGIN'], $allowed_origins)) {
+if (isset($_SERVER['HTTP_ORIGIN']) && in_array($_SERVER['HTTP_ORIGIN'], $allowed_origins)) {
     header("Access-Control-Allow-Origin: " . $_SERVER['HTTP_ORIGIN']);
 }
 
@@ -36,6 +36,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $title = $conn->real_escape_string(trim($_POST['title']));
     $desc = $conn->real_escape_string(trim($_POST['desc']));
+    $is_mull = isset($_POST['is_mull']) ? intval($_POST['is_mull']) : 0; // Assuming it's an integer (1 or 0)
+    $color = $conn->real_escape_string(trim($_POST['color']));
 
     // Check if the user email exists in the database
     $checkEmailQuery = "SELECT id FROM users WHERE email = ?";
@@ -48,12 +50,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $response['status'] = false;
         $response['message'] = 'User does not exist';
     } else {
-        // Insert new task into users_tasks table
-        $sql = "INSERT INTO users_tasks (title, description, user_email, date) VALUES (?, ?, ?, ?)";
+        // Insert new task into users_tasks table with is_mull and color fields
+        $sql = "INSERT INTO users_tasks (title, description, user_email, date, is_mull, color) VALUES (?, ?, ?, ?, ?, ?)";
         $stmt = $conn->prepare($sql);
 
         // Bind date as a string
-        $stmt->bind_param("ssss", $title, $desc, $email, $formattedDate);
+        $stmt->bind_param("ssssss", $title, $desc, $email, $formattedDate, $is_mull, $color);
 
         if ($stmt->execute()) {
             $response['status'] = true;
