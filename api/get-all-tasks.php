@@ -2,7 +2,8 @@
 // Allow from any origin
 header('Content-Type: application/json');
 $allowed_origins = ['http://localhost:5173', 'https://admin.app-minkus.com'];
-if (in_array($_SERVER['HTTP_ORIGIN'], $allowed_origins)) {
+
+if (isset($_SERVER['HTTP_ORIGIN']) && in_array($_SERVER['HTTP_ORIGIN'], $allowed_origins)) {
     header("Access-Control-Allow-Origin: " . $_SERVER['HTTP_ORIGIN']);
 }
 
@@ -24,6 +25,8 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
                 ut.title AS task_title, 
                 ut.description AS task_description, 
                 ut.date AS task_date, 
+                ut.is_mull, 
+                ut.color,
                 u.id AS user_id, 
                 u.name AS user_name, 
                 u.email AS user_email
@@ -47,8 +50,8 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
                         "title" => $row['task_title'],
                         "description" => $row['task_description'],
                         "date" => $row['task_date'],
-                        "is_mull"=>$row['is_mull'],
-                        "color"=>$row['color']
+                        "is_mull" => $row['is_mull'],  // Ensure these columns exist in your DB
+                        "color" => $row['color']
                     ),
                     "user" => array(
                         "id" => $row['user_id'],
