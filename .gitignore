@@ -1,2 +1,3 @@
 api/connection.php
 api/assets
+*.http
