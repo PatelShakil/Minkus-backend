@@ -30,7 +30,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $response['status'] = false;
             $response['message'] = 'Registration failed: ' . $stmt->error;
         }
-        $stmt->close();
 } else {
     $response['status'] = false;
     $response['message'] = 'Invalid request method';
