@@ -39,6 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $user_email = $_POST['user_email'];
             $lat = doubleval($_POST['lat']);
             $long = doubleval($_POST['long']);
+            $p_id = intval($_POST['p_id']);
 
             // Construct the response data
             $response['status'] = true;
@@ -53,17 +54,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 'isJa4' => $isJa4,
                 'sauCount' => $sauCount,
                 'user_email' => $user_email,
-                'imagePath' => "https://app-minkus.com/api/$targetFilePath"
+                'imagePath' => "https://app-minkus.com/api/$targetFilePath",
+                'p_id'=>$p_id
             ];
 
             // SQL statement with placeholders
-            $sql = "INSERT INTO form_b (name, signature, state, rundgang, sauberkit, checkbox1, checkbox2,checkbox3,checkbox4, user_email,lat,lon) VALUES (?, ?, ?, ?, ?,?,?,?,?, ?, ?, ?)";
+            $sql = "INSERT INTO form_b (name, signature, state, rundgang, sauberkit, checkbox1, checkbox2,checkbox3,checkbox4, user_email,lat,lon,p_id) VALUES (?,?, ?, ?, ?, ?,?,?,?,?, ?, ?, ?)";
             $stmt = $conn->prepare($sql);
 
             if ($stmt) {
                 // Bind the parameters to the SQL query
                 $stmt->bind_param(
-                    "ssssiiiiisdd", // Type of each parameter (string, string, string, string, int, int, string)
+                    "ssssiiiiisddi", // Type of each parameter (string, string, string, string, int, int, string)
                     $name,
                     $response['data']['imagePath'],
                     $obj,
@@ -75,7 +77,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $isJa4,
                     $user_email,
                     $lat,
-                    $long
+                    $long,
+                    $p_id
                 );
 
                 // Execute the statement
