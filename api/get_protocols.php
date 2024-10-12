@@ -30,49 +30,49 @@ if ($result->num_rows > 0) {
         $sql_a = "SELECT * FROM form_a WHERE p_id = $protocol_id";
         $result_a = $conn->query($sql_a);
         while ($form_a = $result_a->fetch_assoc()) {
-            $forms['form_a'][] = $form_a;
+            $forms['form_a'] = $form_a;
         }
 
         // Fetch form_b
         $sql_b = "SELECT * FROM form_b WHERE p_id = $protocol_id";
         $result_b = $conn->query($sql_b);
         while ($form_b = $result_b->fetch_assoc()) {
-            $forms['form_b'][] = $form_b;
+            $forms['form_b'] = $form_b;
         }
 
         // Fetch form_c
         $sql_c = "SELECT * FROM form_c WHERE p_id = $protocol_id";
         $result_c = $conn->query($sql_c);
         while ($form_c = $result_c->fetch_assoc()) {
-            $forms['form_c'][] = $form_c;
+            $forms['form_c'] = $form_c;
         }
 
         // Fetch form_d
         $sql_d = "SELECT * FROM form_d WHERE p_id = $protocol_id";
         $result_d = $conn->query($sql_d);
         while ($form_d = $result_d->fetch_assoc()) {
-            $forms['form_d'][] = $form_d;
+            $forms['form_d'] = $form_d;
         }
 
         // Fetch form_e
         $sql_e = "SELECT * FROM form_e WHERE p_id = $protocol_id";
         $result_e = $conn->query($sql_e);
         while ($form_e = $result_e->fetch_assoc()) {
-            $forms['form_e'][] = $form_e;
+            $forms['form_e'] = $form_e;
         }
 
         // Fetch form_f
         $sql_f = "SELECT * FROM form_f WHERE p_id = $protocol_id";
         $result_f = $conn->query($sql_f);
         while ($form_f = $result_f->fetch_assoc()) {
-            $forms['form_f'][] = $form_f;
+            $forms['form_f'] = $form_f;
         }
 
         // Fetch form_g
         $sql_g = "SELECT * FROM form_g WHERE p_id = $protocol_id";
         $result_g = $conn->query($sql_g);
         while ($form_g = $result_g->fetch_assoc()) {
-            $forms['form_g'][] = $form_g;
+            $forms['form_g'] = $form_g;
         }
 
         // Add protocol subscription data with its associated forms
@@ -83,13 +83,13 @@ if ($result->num_rows > 0) {
     }
 
     echo json_encode([
-        "status" => "success",
+        "status" => true,
         "message" => "Protocols and forms fetched successfully.",
         "data" => $protocols
     ]);
 } else {
     echo json_encode([
-        "status" => "success",
+        "status" => false,
         "message" => "No protocol subscriptions found.",
         "data" => []
     ]);
