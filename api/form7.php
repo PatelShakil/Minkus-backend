@@ -54,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if ($stmt) {
                 // Bind the parameters to the SQL query
                 $stmt->bind_param(
-                    "sssssi", // Type of each parameter (string, string, string, string, int, int, string)
+                    "sssssiii", // Type of each parameter (string, string, string, string, int, int, string)
                     $name,
                     $response['data']['imagePath'],
                     $obj,
