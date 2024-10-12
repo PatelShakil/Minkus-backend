@@ -85,7 +85,7 @@ if ($result->num_rows > 0) {
     echo json_encode([
         "status" => true,
         "message" => "Protocols and forms fetched successfully.",
-        "data" => $protocols
+        "data" => array_reverse($protocols)
     ]);
 } else {
     echo json_encode([
